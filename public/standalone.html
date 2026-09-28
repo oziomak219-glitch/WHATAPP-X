@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FlowScale Agency – Direct WhatsApp Chat & Lead Capture</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --wa-emerald: #9333EA;
+      --wa-emerald-hover: #7E22CE;
+      --wa-teal-dark: #3B0764;
+      --wa-teal-mid: #A855F7;
+      --wa-bg-light: #FAF5FF;
+      --wa-chat-bg: #F5EEF8;
+      --wa-text-dark: #111B21;
+      --wa-text-muted: #54656F;
+      --wa-border: #E9D5FF;
+      --wa-bubble-lead: #F3E8FF;
+      --wa-bubble-border: #E9D5FF;
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      font-style: italic;
+      background-color: var(--wa-bg-light);
+      color: var(--wa-text-dark);
+      line-height: 1.6;
+    }
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+    
+    /* Top Bar */
+    header {
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--wa-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+    .brand {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--wa-teal-dark);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--wa-text-muted);
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--wa-teal-dark); }
+    .btn-wa-header {
+      background: var(--wa-emerald);
+      color: #FFFFFF;
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: opacity 0.2s;
+    }
+    .btn-wa-header:hover { opacity: 0.92; }
+
+    /* Hero Section */
+    .hero {
+      padding: 80px 0 60px;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .hero-tag {
+      display: inline-block;
+      color: var(--wa-teal-dark);
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .hero-title {
+      font-size: 3rem;
+      line-height: 1.15;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--wa-text-dark);
+      margin-bottom: 20px;
+      text-wrap: balance;
+    }
+    .hero-title span { color: var(--wa-teal-mid); }
+    .hero-sub {
+      font-size: 1.15rem;
+      color: var(--wa-text-muted);
+      margin-bottom: 32px;
+      max-width: 520px;
+    }
+    .hero-actions { display: flex; gap: 16px; align-items: center; margin-bottom: 40px; }
+    .btn-primary {
+      background: var(--wa-emerald);
+      color: #FFFFFF;
+      padding: 14px 28px;
+      border-radius: var(--radius);
+      font-weight: 700;
+      font-size: 1.05rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45);
+    }
+    .hero-stats {
+      display: flex;
+      gap: 32px;
+      border-top: 1px solid var(--wa-border);
+      padding-top: 24px;
+    }
+    .stat-val { font-size: 1.6rem; font-weight: 800; color: var(--wa-teal-dark); }
+    .stat-lbl { font-size: 0.85rem; color: var(--wa-text-muted); }
+
+    /* Phone Mockup */
+    .mockup-wrapper {
+      background: #FFFFFF;
+      border-radius: 28px;
+      padding: 16px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+      border: 1px solid var(--wa-border);
+      max-width: 380px;
+      margin: 0 auto;
+    }
+    .mockup-header {
+      background: var(--wa-teal-dark);
+      color: #FFFFFF;
+      border-radius: 16px 16px 0 0;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--wa-emerald); display: flex; align-items: center; justify-content: center; font-weight: bold; color: white; }
+    .mockup-chat {
+      background: var(--wa-chat-bg);
+      padding: 16px;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .bubble {
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      max-width: 85%;
+      position: relative;
+    }
+    .bubble-in { background: #FFFFFF; align-self: flex-start; border-top-left-radius: 2px; }
+    .bubble-out { background: var(--wa-bubble-lead); border: 1px solid var(--wa-bubble-border); align-self: flex-end; border-top-right-radius: 2px; }
+    .bubble-time { font-size: 0.7rem; color: #8696A0; text-align: right; margin-top: 4px; }
+
+    /* Features Section */
+    .features { padding: 80px 0; background: #FFFFFF; }
+    .section-head { text-align: center; max-width: 650px; margin: 0 auto 56px; }
+    .section-head h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 12px; }
+    .section-head p { color: var(--wa-text-muted); font-size: 1.05rem; }
+    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .feature-card {
+      background: var(--wa-bg-light);
+      border: 1px solid var(--wa-border);
+      border-radius: var(--radius);
+      padding: 32px 24px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .feature-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--wa-emerald);
+    }
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: #E8FBF0;
+      color: var(--wa-emerald);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+    .feature-card h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 10px; }
+    .feature-card p { font-size: 0.95rem; color: var(--wa-text-muted); line-height: 1.6; }
+
+    /* Lead Form Section */
+    .form-section { padding: 90px 0; }
+    .form-container {
+      background: #FFFFFF;
+      border: 1px solid var(--wa-border);
+      border-radius: 20px;
+      padding: 48px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 48px;
+    }
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--wa-text-dark);
+    }
+    .form-control {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 0.95rem;
+      border: 1px solid var(--wa-border);
+      border-radius: 8px;
+      font-family: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-control:focus {
+      outline: none;
+      border-color: var(--wa-emerald);
+      box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.15);
+    }
+    .error-msg { color: #E53E3E; font-size: 0.8rem; margin-top: 4px; display: none; }
+    .form-control.is-invalid { border-color: #E53E3E; }
+    .form-control.is-invalid + .error-msg { display: block; }
+    
+    /* Live Preview Box */
+    .preview-box {
+      background: var(--wa-bg-light);
+      border: 1px solid var(--wa-border);
+      border-radius: var(--radius);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+    }
+    .preview-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 12px; color: var(--wa-teal-dark); }
+    .preview-content {
+      background: #FFFFFF;
+      border: 1px solid var(--wa-border);
+      border-radius: 8px;
+      padding: 16px;
+      font-size: 0.85rem;
+      white-space: pre-wrap;
+      flex-grow: 1;
+      font-family: monospace;
+      color: #334155;
+    }
+
+    /* Floating WhatsApp Widget */
+    .floating-wa-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--wa-emerald);
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+      cursor: pointer;
+      z-index: 999;
+      border: none;
+      animation: pulse-ring 2s infinite;
+      transition: transform 0.2s;
+    }
+    .floating-wa-btn:hover { transform: scale(1.08); }
+    @keyframes pulse-ring {
+      0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); }
+      70% { box-shadow: 0 0 0 16px rgba(37, 211, 102, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+    }
+
+    /* Floating Chat Drawer */
+    .wa-chat-drawer {
+      position: fixed;
+      bottom: 96px;
+      right: 24px;
+      width: 320px;
+      background: #FFFFFF;
+      border-radius: 16px;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.18);
+      overflow: hidden;
+      display: none;
+      z-index: 1000;
+      border: 1px solid var(--wa-border);
+    }
+    .wa-chat-drawer.open { display: block; animation: slideUp 0.25s ease-out; }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .drawer-header {
+      background: var(--wa-teal-dark);
+      color: white;
+      padding: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .drawer-body { padding: 16px; background: var(--wa-chat-bg); }
+    .drawer-footer { padding: 12px; background: white; border-top: 1px solid var(--wa-border); }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; text-align: center; }
+      .hero-actions { justify-content: center; }
+      .hero-stats { justify-content: center; }
+      .features-grid { grid-template-columns: 1fr; }
+      .form-container { grid-template-columns: 1fr; padding: 24px; }
+      .nav-links { display: none; }
+      .hero-title { font-size: 2.3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <header>
+    <div class="container nav-wrap">
+      <a href="#" class="brand">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 15 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67Z"/>
+        </svg>
+        FlowScale Agency
+      </a>
+      <ul class="nav-links">
+        <li><a href="#features">Key Benefits</a></li>
+        <li><a href="#lead-form">Instant Chat Form</a></li>
+        <li><a href="#contact">Direct WhatsApp</a></li>
+      </ul>
+      <a href="https://wa.me/15553298800?text=Hello%20FlowScale%20Agency%2C%20I'd%20like%20to%20learn%20more%20about%20your%20services!" target="_blank" rel="noopener noreferrer" class="btn-wa-header">
+        Chat on WhatsApp
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="hero-tag">Direct WhatsApp Conversion Funnel</span>
+        <h1 class="hero-title">Turn Interested Prospects Into <span>Active WhatsApp Chats</span></h1>
+        <p class="hero-sub">Turn visitors into high-value sales conversations in under 60 seconds. Connect directly with high-intent leads with 98% open rates.</p>
+        <div class="hero-actions">
+          <a href="#lead-form" class="btn-primary">
+            Start Direct Chat
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="stat-val">98%</div>
+            <div class="stat-lbl">Message Open Rate</div>
+          </div>
+          <div>
+            <div class="stat-val">&lt; 3 Min</div>
+            <div class="stat-lbl">Average Response Time</div>
+          </div>
+          <div>
+            <div class="stat-val">3.8x</div>
+            <div class="stat-lbl">Higher Conversion Rate</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Visual Phone Mockup -->
+      <div class="mockup-wrapper">
+        <div class="mockup-header">
+          <div class="avatar">W</div>
+          <div>
+            <div style="font-weight:700;font-size:0.95rem;">FlowScale Agency</div>
+            <div style="font-size:0.75rem;opacity:0.85;">Online · Direct Support</div>
+          </div>
+        </div>
+        <div class="mockup-chat">
+          <div class="bubble bubble-in">
+            👋 Welcome! How can we help scale your business today?
+            <div class="bubble-time">10:42 AM</div>
+          </div>
+          <div class="bubble bubble-out">
+            Hi! I am interested in WhatsApp Chatbot & Lead Automation. Can we discuss pricing?
+            <div class="bubble-time">10:43 AM ✓✓</div>
+          </div>
+          <div class="bubble bubble-in">
+            Absolutely! We offer instant custom proposals. Click below to start your direct chat!
+            <div class="bubble-time">10:43 AM</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="features">
+    <div class="container">
+      <div class="section-head">
+        <h2>Why High-Growth Businesses Close On WhatsApp</h2>
+        <p>Skip congested email inboxes. Engage decision makers directly in their favorite messaging app.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Instant 1-to-1 Engagement</h3>
+          <p>Zero wait time. 90% of WhatsApp messages are opened within 3 minutes of delivery, dramatically reducing drop-off.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎯</div>
+          <h3>Pre-Formatted Lead Context</h3>
+          <p>Clients send their exact needs, name, and budget in a structured template so you start every conversation informed.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📱</div>
+          <h3>Frictionless Mobile Native</h3>
+          <p>No account creation, no password resets. Works natively across iOS, Android, macOS, Windows, and Web WhatsApp.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive WhatsApp Lead Form -->
+  <section id="lead-form" class="form-section">
+    <div class="container">
+      <div class="section-head">
+        <h2>Send Us a Direct WhatsApp Inquiry</h2>
+        <p>Fill out the form below. Your message will be formatted and opened directly in WhatsApp!</p>
+      </div>
+
+      <div class="form-container">
+        <!-- Form Inputs -->
+        <form id="whatsappForm" novalidate>
+          <div class="form-group">
+            <label for="userName">Full Name *</label>
+            <input type="text" id="userName" class="form-control" placeholder="e.g. Alex Morgan" required />
+            <div class="error-msg">Please enter your name</div>
+          </div>
+
+          <div class="form-group">
+            <label for="userEmail">Email Address *</label>
+            <input type="email" id="userEmail" class="form-control" placeholder="e.g. alex@example.com" required />
+            <div class="error-msg">Please enter a valid email address</div>
+          </div>
+
+          <div class="form-group">
+            <label for="userService">Service Needed</label>
+            <select id="userService" class="form-control">
+              <option value="WhatsApp Chatbot & Lead Automation">WhatsApp Chatbot & Lead Automation</option>
+              <option value="Digital Marketing & Paid Acquisition">Digital Marketing & Paid Acquisition</option>
+              <option value="E-commerce Conversational Sales">E-commerce Conversational Sales</option>
+              <option value="VIP Concierge & Custom Support">VIP Concierge & Custom Support</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="userMessage">Your Message *</label>
+            <textarea id="userMessage" class="form-control" rows="4" placeholder="Briefly describe what you are looking to achieve..." required></textarea>
+            <div class="error-msg">Please enter your message</div>
+          </div>
+
+          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;">
+            Chat on WhatsApp
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 15 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67Z"/>
+            </svg>
+          </button>
+        </form>
+
+        <!-- Live Message Preview Box -->
+        <div class="preview-box">
+          <div class="preview-title">Live Message Formatter Preview</div>
+          <div id="messagePreview" class="preview-content"></div>
+          <div style="font-size:0.75rem; color:var(--wa-text-muted); margin-top:12px;">
+            Target Number: <strong>+1 (555) 329-8800</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Floating WhatsApp Button -->
+  <button id="floatingWaBtn" class="floating-wa-btn" aria-label="Open WhatsApp Chat">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 15 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67Z"/>
+    </svg>
+  </button>
+
+  <!-- Floating Drawer -->
+  <div id="waChatDrawer" class="wa-chat-drawer">
+    <div class="drawer-header">
+      <div>
+        <div style="font-weight:700;font-size:0.9rem;">FlowScale Agency</div>
+        <div style="font-size:0.75rem;opacity:0.9;">Typically replies in minutes</div>
+      </div>
+      <button id="closeDrawer" style="background:none;border:none;color:white;cursor:pointer;font-size:1.2rem;">&times;</button>
+    </div>
+    <div class="drawer-body">
+      <div class="bubble bubble-in" style="font-size:0.85rem;">
+        👋 Hi there! Need quick guidance or pricing? Tap below to chat directly with us on WhatsApp.
+      </div>
+    </div>
+    <div class="drawer-footer">
+      <a href="https://wa.me/15553298800?text=Hello%20FlowScale%20Agency%2C%20I'm%20visiting%20your%20website%20and%20have%20a%20quick%20question!" target="_blank" rel="noopener noreferrer" class="btn-primary" style="width:100%;font-size:0.9rem;padding:10px;justify-content:center;">
+        Start Instant Chat
+      </a>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    (function() {
+      const WHATSAPP_PHONE = "15553298800";
+      const BUSINESS_NAME = "FlowScale Agency";
+
+      const form = document.getElementById('whatsappForm');
+      const nameInput = document.getElementById('userName');
+      const emailInput = document.getElementById('userEmail');
+      const serviceSelect = document.getElementById('userService');
+      const messageInput = document.getElementById('userMessage');
+      const previewBox = document.getElementById('messagePreview');
+      const floatingBtn = document.getElementById('floatingWaBtn');
+      const chatDrawer = document.getElementById('waChatDrawer');
+      const closeDrawer = document.getElementById('closeDrawer');
+
+      // Update live preview
+      function updatePreview() {
+        const name = nameInput.value.trim() || "[Your Name]";
+        const email = emailInput.value.trim() || "[Your Email]";
+        const service = serviceSelect.value;
+        const msg = messageInput.value.trim() || "[Your Message]";
+
+        const previewText = 
+          "👋 *Hello " + BUSINESS_NAME + "!*\n" +
+          "I would like to inquire about your services via the website.\n\n" +
+          "📋 *Lead Details:*\n" +
+          "• *Name:* " + name + "\n" +
+          "• *Email:* " + email + "\n" +
+          "• *Service:* " + service + "\n\n" +
+          "💬 *Message:*\n" +
+          '"' + msg + '"';
+
+        previewBox.textContent = previewText;
+      }
+
+      [nameInput, emailInput, serviceSelect, messageInput].forEach(el => {
+        el.addEventListener('input', updatePreview);
+      });
+      updatePreview();
+
+      // Form validation & WhatsApp Redirection
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        let isValid = true;
+
+        [nameInput, emailInput, messageInput].forEach(input => {
+          if (!input.value.trim()) {
+            input.classList.add('is-invalid');
+            isValid = false;
+          } else {
+            input.classList.remove('is-invalid');
+          }
+        });
+
+        // Basic email check
+        if (emailInput.value.trim() && !/\S+@\S+\.\S+/.test(emailInput.value)) {
+          emailInput.classList.add('is-invalid');
+          isValid = false;
+        }
+
+        if (!isValid) return;
+
+        const formattedMessage = 
+          "👋 *Hello " + BUSINESS_NAME + "!*\n" +
+          "I would like to inquire about your services via the website.\n\n" +
+          "📋 *Lead Details:*\n" +
+          "• *Name:* " + nameInput.value.trim() + "\n" +
+          "• *Email:* " + emailInput.value.trim() + "\n" +
+          "• *Service:* " + serviceSelect.value + "\n\n" +
+          "💬 *Message:*\n" +
+          '"' + messageInput.value.trim() + '"';
+
+        const encodedMessage = encodeURIComponent(formattedMessage);
+        const waUrl = "https://wa.me/" + WHATSAPP_PHONE + "?text=" + encodedMessage;
+
+        window.open(waUrl, '_blank', 'noopener,noreferrer');
+      });
+
+      // Floating Widget Toggle
+      floatingBtn.addEventListener('click', function() {
+        chatDrawer.classList.toggle('open');
+      });
+
+      closeDrawer.addEventListener('click', function() {
+        chatDrawer.classList.remove('open');
+      });
+    })();
+  </script>
+</body>
+</html>

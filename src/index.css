@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+@layer base {
+  body.font-italic-mode {
+    font-style: italic;
+  }
+}
+
+.theme-purple-accent {
+  --theme-primary: #9333ea;
+  --theme-dark: #3b0764;
+}

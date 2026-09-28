@@ -1,0 +1,6 @@
+{
+  "name": "WhatsApp LeadFlow – High-Converting WhatsApp Landing Page",
+  "description": "Modern, high-converting WhatsApp landing page with instant chat lead capture, real-time message builder, and interactive widget.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
